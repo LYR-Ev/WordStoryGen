@@ -1,0 +1,46 @@
+2026-02-26 09:34:47 [INFO] generator.story_generator: 生成故事文案: word=substitute, bank=cet4
+2026-02-26 09:34:47 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 09:35:12 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_093447_substitute.json
+2026-02-26 09:35:12 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_093447_substitute.png
+2026-02-26 09:35:12 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 09:46:44 [INFO] generator.story_generator: 生成故事文案: word=abandon, bank=cet4
+2026-02-26 09:46:44 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 09:47:11 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_094644_abandon.json
+2026-02-26 09:47:11 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_094644_abandon.txt
+2026-02-26 09:47:11 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_094644_abandon.png
+2026-02-26 09:47:11 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 11:03:31 [INFO] generator.story_generator: 生成故事文案: word=ability, bank=cet4
+2026-02-26 11:03:31 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 11:04:00 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_110331_ability.json
+2026-02-26 11:04:00 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_110331_ability.txt
+2026-02-26 11:04:00 [INFO] generator.cover_maker: 封面标题清洗: '失而复得的爱情，你信吗？✨' -> '失而复得的爱情，你信吗？'
+2026-02-26 11:04:00 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_110331_ability.png
+2026-02-26 11:04:00 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 11:07:38 [INFO] generator.story_generator: 生成故事文案: word=absorb, bank=cet4
+2026-02-26 11:07:38 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 11:07:58 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_110738_absorb.json
+2026-02-26 11:07:58 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_110738_absorb.txt
+2026-02-26 11:07:58 [INFO] generator.cover_maker: 封面标题清洗: '爱情里的秘密，他竟把我的心都吸干了！😱' -> '爱情里的秘密，他竟把我的心都吸干了！'
+2026-02-26 11:07:58 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_110738_absorb.png
+2026-02-26 11:07:58 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 11:38:17 [INFO] generator.story_generator: 生成故事文案: word=abstract, bank=cet4
+2026-02-26 11:38:17 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 11:38:43 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_113817_abstract.json
+2026-02-26 11:38:43 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_113817_abstract.txt
+2026-02-26 11:38:43 [INFO] generator.cover_maker: 封面标题清洗: '爱情不只是甜，更是抽象的艺术🎨' -> '爱情不只是甜，更是抽象的艺术'
+2026-02-26 11:38:43 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_113817_abstract.png
+2026-02-26 11:38:43 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 14:48:54 [INFO] generator.story_generator: 生成故事文案: word=abnormal, bank=cet6
+2026-02-26 14:48:54 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 14:49:20 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_144854_abnormal.json
+2026-02-26 14:49:20 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_144854_abnormal.txt
+2026-02-26 14:49:20 [INFO] generator.cover_maker: 封面标题清洗: '突然消失的他，留下了一束光！' -> '突然消失的他，留下了一束光！'
+2026-02-26 14:49:20 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_144854_abnormal.png
+2026-02-26 14:49:20 [INFO] __main__: 完成：成功 1 篇
+2026-02-26 14:54:26 [INFO] generator.story_generator: 生成故事文案: word=abolish, bank=cet6
+2026-02-26 14:54:26 [INFO] generator.ollama_client: Ollama 请求 (attempt 1/3): model=qwen2.5
+2026-02-26 14:54:55 [INFO] __main__: 文案已保存: D:\source\WordStoryGen\output\posts\20260226_145426_abolish.json
+2026-02-26 14:54:55 [INFO] __main__: 文案已导出 TXT: D:\source\WordStoryGen\output\posts\20260226_145426_abolish.txt
+2026-02-26 14:54:55 [INFO] generator.cover_maker: 封面标题清洗: 'abolish' -> 'abolish'
+2026-02-26 14:54:55 [INFO] generator.cover_maker: 封面已保存: D:\source\WordStoryGen\output\covers\20260226_145426_abolish.png
+2026-02-26 14:54:55 [INFO] __main__: 完成：成功 1 篇
