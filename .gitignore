@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
+output/
+logs/
+used_words.json
