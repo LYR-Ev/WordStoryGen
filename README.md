@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # WordStoryGen · 小红书英语单词故事文案 + 封面生成器
 
 自动生成「爆款风格」英语单词故事文案，并用本地 Ollama 模型 + 自定义背景图生成高清封面。
@@ -200,6 +199,4 @@ project/
 - **依赖**：见 `requirements.txt`（含 `requests`、`Pillow`、`python-dotenv`）。
 
 复制即运行：按上述安装步骤配置好 Ollama、词库和背景图后，执行 `python main.py cet4` 即可生成一篇文案与对应封面。
-=======
-# WordStoryGen
->>>>>>> b9defd526a3073efec962527771850365fd576c6
+

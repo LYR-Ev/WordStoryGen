@@ -1,7 +1,8 @@
-# runtime outputs
-output/
-logs/
-used_words.json
+# runtime outputs (keep structure, ignore content)
+output/*
+!output/.gitkeep
+logs/*
+!logs/.gitkeep
 
 # backups
 *.bak
@@ -13,3 +14,9 @@ used_words.json
 __pycache__/
 *.pyc
 venv/
+
+# system
+.DS_Store
+
+# local data (optional: remove if you want to track used words)
+used_words.json
