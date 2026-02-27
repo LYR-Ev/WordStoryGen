@@ -1,8 +1,15 @@
-venv/
-__pycache__/
-*.pyc
-.env
-.DS_Store
+# runtime outputs
 output/
 logs/
 used_words.json
+
+# backups
+*.bak
+
+# env
+.env
+
+# python
+__pycache__/
+*.pyc
+venv/
