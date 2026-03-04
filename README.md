@@ -91,8 +91,8 @@ copy .env.example .env
 ## 四、运行示例
 
 ```bash
-# 使用 CET4 词库生成 1 篇文案 + 封面（默认同时输出 JSON + TXT）
-python main.py cet4
+# 使用 CET6 词库生成 1 篇文案 + 封面（默认同时输出 JSON + TXT）
+python main.py cet6
 
 # 仅输出 JSON（适合后续做自动发布、评分、Excel 等）
 python main.py cet4 --format json

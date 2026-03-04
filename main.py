@@ -43,6 +43,13 @@ OUTPUT_POSTS = PROJECT_ROOT / "output" / "posts"
 OUTPUT_COVERS = PROJECT_ROOT / "output" / "covers"
 LOGS_DIR = PROJECT_ROOT / "logs"
 
+# 故事正文末尾固定追加：互动引导 + 标签（仅拼接到 content，不改变 title）
+STORY_FOOTER_INTERACTION = """——
+如果这个单词故事对你有帮助，记得点赞❤️和收藏⭐支持一下～
+关注我，每天一个单词故事，轻松提升词汇量！
+——"""
+STORY_FOOTER_TAGS = "#英语学习 #每日单词 #单词积累 #词汇提升 #英语写作 #背单词 #学习打卡 #自律成长 #语言学习 #考研英语"
+
 
 def setup_logging() -> None:
     """配置日志：同时输出到控制台与 logs 目录。"""
@@ -123,6 +130,8 @@ def run_one(
             word_loader.mark_used(bank, word)  # 不占用未成功生成的单词
             return False
         title = parse_title_from_story(story)
+        # 正文末尾追加固定互动文案与标签（与正文空一行；不修改 title）
+        story = story.rstrip() + "\n\n" + STORY_FOOTER_INTERACTION + "\n\n" + STORY_FOOTER_TAGS
 
     # 2. 保存文案（JSON = 主存储，TXT = 导出格式，由 --format 控制）
     if not only_cover:
