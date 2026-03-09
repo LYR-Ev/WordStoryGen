@@ -31,7 +31,9 @@ except ImportError:
 import os
 
 from generator import CoverMaker, OllamaClient, StoryGenerator, WordLoader
+from generator.cover_generator import generate as generate_cover_image
 from generator.exporters import write_txt
+from generator.tag_generator import get_random_tags_string
 from generator.word_loader import WordBankType
 
 # 项目根目录
@@ -41,14 +43,14 @@ os.chdir(PROJECT_ROOT)
 # 输出目录
 OUTPUT_POSTS = PROJECT_ROOT / "output" / "posts"
 OUTPUT_COVERS = PROJECT_ROOT / "output" / "covers"
+OUTPUT_IMAGES = PROJECT_ROOT / "output" / "images"
 LOGS_DIR = PROJECT_ROOT / "logs"
 
-# 故事正文末尾固定追加：互动引导 + 标签（仅拼接到 content，不改变 title）
+# 故事正文末尾固定追加：互动引导 + 随机标签（仅拼接到 content，不修改 title）
 STORY_FOOTER_INTERACTION = """——
 如果这个单词故事对你有帮助，记得点赞❤️和收藏⭐支持一下～
 关注我，每天一个单词故事，轻松提升词汇量！
 ——"""
-STORY_FOOTER_TAGS = "#英语学习 #每日单词 #单词积累 #词汇提升 #英语写作 #背单词 #学习打卡 #自律成长 #语言学习 #考研英语"
 
 
 def setup_logging() -> None:
@@ -67,9 +69,10 @@ def setup_logging() -> None:
 
 
 def ensure_dirs() -> None:
-    """确保 output/posts、output/covers、data、prompts 存在。"""
+    """确保 output/posts、output/covers、output/images、data、prompts 存在。"""
     OUTPUT_POSTS.mkdir(parents=True, exist_ok=True)
     OUTPUT_COVERS.mkdir(parents=True, exist_ok=True)
+    OUTPUT_IMAGES.mkdir(parents=True, exist_ok=True)
     (PROJECT_ROOT / "data").mkdir(parents=True, exist_ok=True)
     (PROJECT_ROOT / "prompts").mkdir(parents=True, exist_ok=True)
 
@@ -130,8 +133,8 @@ def run_one(
             word_loader.mark_used(bank, word)  # 不占用未成功生成的单词
             return False
         title = parse_title_from_story(story)
-        # 正文末尾追加固定互动文案与标签（与正文空一行；不修改 title）
-        story = story.rstrip() + "\n\n" + STORY_FOOTER_INTERACTION + "\n\n" + STORY_FOOTER_TAGS
+        # 正文末尾追加固定互动文案与随机标签（与正文空一行；不修改 title）
+        story = story.rstrip() + "\n\n" + STORY_FOOTER_INTERACTION + "\n\n" + get_random_tags_string(10)
 
     # 2. 保存文案（JSON = 主存储，TXT = 导出格式，由 --format 控制）
     if not only_cover:
@@ -164,6 +167,16 @@ def run_one(
             cover_maker.make(title=word, output_filename=f"{post_id}.png")
         except Exception as e:
             logger.exception("生成封面失败: %s", e)
+        try:
+            generate_cover_image(
+                title=title,
+                word=word,
+                hook="每天一个单词故事，轻松提升词汇量",
+                output_dir=OUTPUT_IMAGES,
+                output_filename=f"{post_id}.png",
+            )
+        except Exception as e:
+            logger.exception("生成封面图(images)失败: %s", e)
 
     return True
 
