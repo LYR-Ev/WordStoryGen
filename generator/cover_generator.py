@@ -1,4 +1,4 @@
-"""根据标题、单词、钩子文案生成与 bg1 同尺寸的封面图，背景图轮流使用，3 种排版模板。"""
+"""根据单词生成与 bg1 同尺寸的封面图，封面上只显示英文单词。"""
 
 import logging
 import random
@@ -109,16 +109,16 @@ def generate(
 ) -> Path:
     """生成一张 1080x1440 的封面图并保存到 output/images。
 
-    背景按顺序轮流使用 assets/backgrounds/ 下的 bg1.jpg → bg2.jpg → bg3.jpg；
-    支持 3 种排版模板，文字均居中。
+    封面上只显示英文单词，垂直居中；背景轮流使用 bg1.jpg → bg2.jpg → bg3.jpg。
+    template_index: 0/1/2 仅微调单词垂直位置，None 则随机。
 
     Args:
-        title: 标题文案。
-        word: 英文单词。
-        hook: 钩子文案。
+        title: 未使用（保留参数兼容调用方）。
+        word: 英文单词，封面上唯一内容。
+        hook: 未使用（保留参数兼容调用方）。
         output_dir: 输出目录。
         output_filename: 输出文件名（含 .png），不传则自动生成。
-        template_index: 0/1/2 指定模板，None 则随机。
+        template_index: 0/1/2 指定垂直位置，None 则随机。
 
     Returns:
         输出文件的 Path。
@@ -126,36 +126,21 @@ def generate(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 使用背景图轮流加载（不存在时回退为纯白背景）
     img = _load_background_image()
     draw = ImageDraw.Draw(img)
 
-    title = (title or "").strip() or "每日单词"
     word = (word or "").strip() or "word"
-    hook = (hook or "").strip() or "每天一个单词故事"
 
     if template_index is None:
         template_index = random.randint(0, 2)
 
-    font_title = _get_font(36)
     font_word = _get_font(80)
-    font_hook = _get_font(28)
 
-    # 三种排版：标题 / 单词 / 钩子 在上下位置的组合，均水平居中
-    if template_index == 0:
-        _draw_centered_text(draw, title, font_title, 280, OUTPUT_WIDTH)
-        _draw_centered_text(draw, word, font_word, 580, OUTPUT_WIDTH)
-        _draw_centered_text(draw, hook, font_hook, 1080, OUTPUT_WIDTH)
-    elif template_index == 1:
-        _draw_centered_text(draw, word, font_word, 320, OUTPUT_WIDTH)
-        _draw_centered_text(draw, title, font_title, 720, OUTPUT_WIDTH)
-        _draw_centered_text(draw, hook, font_hook, 1150, OUTPUT_WIDTH)
-    else:
-        _draw_centered_text(draw, title, font_title, 260, OUTPUT_WIDTH)
-        _draw_centered_text(draw, hook, font_hook, 640, OUTPUT_WIDTH)
-        _draw_centered_text(draw, word, font_word, 980, OUTPUT_WIDTH)
+    # 封面上只有单词，垂直位置三种微调
+    y_positions = (620, 580, 600)  # 居中偏上/正中/略下
+    y = y_positions[template_index]
+    _draw_centered_text(draw, word, font_word, y, OUTPUT_WIDTH)
 
-    # 每生成一次，背景索引 +1 并对 3 取模，下次轮流使用下一张
     global current_bg_index
     current_bg_index = (current_bg_index + 1) % len(BACKGROUND_NAMES)
 
