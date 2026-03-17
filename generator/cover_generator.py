@@ -1,4 +1,4 @@
-"""根据标题、单词、钩子文案生成与 bg1 同尺寸的封面图，随机背景、3 种排版模板。"""
+"""根据标题、单词、钩子文案生成与 bg1 同尺寸的封面图，背景图轮流使用，3 种排版模板。"""
 
 import logging
 import random
@@ -11,6 +11,13 @@ logger = logging.getLogger(__name__)
 
 OUTPUT_WIDTH = 1080
 OUTPUT_HEIGHT = 1440
+
+# 背景图目录：assets/backgrounds/ 下放置 bg1.jpg, bg2.jpg, bg3.jpg
+BACKGROUND_DIR = Path("assets/backgrounds")
+BACKGROUND_NAMES = ["bg1.jpg", "bg2.jpg", "bg3.jpg"]
+
+# 轮流使用背景图时的当前索引（每生成一次 +1，对 3 取模）
+current_bg_index = 0
 
 
 def _find_font_path() -> Optional[Path]:
@@ -49,11 +56,32 @@ def _get_font(size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
 
 
 def _random_background_color() -> tuple[int, int, int]:
-    """随机生成一种偏柔和的背景色（避免过亮或过暗）。"""
+    """随机生成一种偏柔和的背景色（避免过亮或过暗）。保留用于回退逻辑。"""
     r = random.randint(40, 200)
     g = random.randint(40, 200)
     b = random.randint(50, 220)
     return (r, g, b)
+
+
+def _load_background_image() -> Image.Image:
+    """按 current_bg_index 轮流加载 assets/backgrounds/bg1.jpg、bg2.jpg、bg3.jpg。
+
+    若对应背景图不存在，则回退为纯白背景，避免程序崩溃。
+    返回的图片尺寸为 OUTPUT_WIDTH x OUTPUT_HEIGHT。
+    """
+    global current_bg_index
+    idx = current_bg_index % len(BACKGROUND_NAMES)
+    bg_path = BACKGROUND_DIR / BACKGROUND_NAMES[idx]
+    if bg_path.exists():
+        try:
+            img = Image.open(bg_path).convert("RGB")
+            img = img.resize((OUTPUT_WIDTH, OUTPUT_HEIGHT), Image.Resampling.LANCZOS)
+            logger.debug("使用背景图: %s", bg_path)
+            return img
+        except Exception as e:
+            logger.warning("加载背景图失败，使用纯白背景: %s", e)
+    # 背景图不存在或加载失败：纯白背景
+    return Image.new("RGB", (OUTPUT_WIDTH, OUTPUT_HEIGHT), (255, 255, 255))
 
 
 def _draw_centered_text(
@@ -81,7 +109,8 @@ def generate(
 ) -> Path:
     """生成一张 1080x1440 的封面图并保存到 output/images。
 
-    使用随机背景色，支持 3 种排版模板，文字均居中。
+    背景按顺序轮流使用 assets/backgrounds/ 下的 bg1.jpg → bg2.jpg → bg3.jpg；
+    支持 3 种排版模板，文字均居中。
 
     Args:
         title: 标题文案。
@@ -97,7 +126,8 @@ def generate(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    img = Image.new("RGB", (OUTPUT_WIDTH, OUTPUT_HEIGHT), _random_background_color())
+    # 使用背景图轮流加载（不存在时回退为纯白背景）
+    img = _load_background_image()
     draw = ImageDraw.Draw(img)
 
     title = (title or "").strip() or "每日单词"
@@ -124,6 +154,10 @@ def generate(
         _draw_centered_text(draw, title, font_title, 260, OUTPUT_WIDTH)
         _draw_centered_text(draw, hook, font_hook, 640, OUTPUT_WIDTH)
         _draw_centered_text(draw, word, font_word, 980, OUTPUT_WIDTH)
+
+    # 每生成一次，背景索引 +1 并对 3 取模，下次轮流使用下一张
+    global current_bg_index
+    current_bg_index = (current_bg_index + 1) % len(BACKGROUND_NAMES)
 
     if output_filename is None:
         import datetime
