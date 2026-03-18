@@ -92,6 +92,8 @@ copy .env.example .env
 
 ```bash
 # 使用 CET6 词库生成 1 篇文案 + 封面（默认同时输出 JSON + TXT）
+venv\Scripts\activate
+
 python main.py cet6
 
 # 仅输出 JSON（适合后续做自动发布、评分、Excel 等）
